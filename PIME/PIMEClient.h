@@ -42,10 +42,10 @@ public:
 	void onActivate();
 	void onDeactivate();
 
-	bool filterKeyDown(Ime::KeyEvent& keyEvent);
+	bool filterKeyDown(Ime::KeyEvent& keyEvent, Ime::EditSession* session);
 	bool onKeyDown(Ime::KeyEvent& keyEvent, Ime::EditSession* session);
 
-	bool filterKeyUp(Ime::KeyEvent& keyEvent);
+	bool filterKeyUp(Ime::KeyEvent& keyEvent, Ime::EditSession* session);
 	bool onKeyUp(Ime::KeyEvent& keyEvent, Ime::EditSession* session);
 
 	bool onPreservedKey(const GUID& guid);

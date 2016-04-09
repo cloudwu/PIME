@@ -35,6 +35,20 @@ static PSID g_allAppsSID = NULL;
 
 extern "C" {
 
+#define SECURITY_APP_PACKAGE_AUTHORITY              {0,0,0,0,0,15}
+
+#define SECURITY_APP_PACKAGE_BASE_RID               (0x00000002L)
+#define SECURITY_BUILTIN_APP_PACKAGE_RID_COUNT      (2L)
+#define SECURITY_APP_PACKAGE_RID_COUNT              (8L)
+#define SECURITY_CAPABILITY_BASE_RID                (0x00000003L)
+#define SECURITY_BUILTIN_CAPABILITY_RID_COUNT       (2L)
+#define SECURITY_CAPABILITY_RID_COUNT               (5L)
+#define SECURITY_PARENT_PACKAGE_RID_COUNT           (SECURITY_APP_PACKAGE_RID_COUNT)
+#define SECURITY_CHILD_PACKAGE_RID_COUNT            (12L)
+
+#define SECURITY_BUILTIN_PACKAGE_ANY_PACKAGE        (0x00000001L)
+
+
 static void init() {
 	// create security attributes for the pipe
 	// http://msdn.microsoft.com/en-us/library/windows/desktop/hh448449(v=vs.85).aspx

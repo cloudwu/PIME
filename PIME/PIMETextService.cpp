@@ -106,12 +106,12 @@ void TextService::onFocus() {
 }
 
 // virtual
-bool TextService::filterKeyDown(Ime::KeyEvent& keyEvent) {
+bool TextService::filterKeyDown(Ime::KeyEvent& keyEvent, Ime::EditSession *session) {
 	// if (keyEvent.isKeyToggled(VK_CAPITAL))
 	//	return true;
 	if(!client_)
 		return false;
-	return client_->filterKeyDown(keyEvent);
+	return client_->filterKeyDown(keyEvent, session);
 }
 
 // virtual
@@ -124,10 +124,10 @@ bool TextService::onKeyDown(Ime::KeyEvent& keyEvent, Ime::EditSession* session) 
 }
 
 // virtual
-bool TextService::filterKeyUp(Ime::KeyEvent& keyEvent) {
+bool TextService::filterKeyUp(Ime::KeyEvent& keyEvent, Ime::EditSession *session) {
 	if(!client_)
 		return false;
-	return client_->filterKeyUp(keyEvent);
+	return client_->filterKeyUp(keyEvent, session);
 }
 
 // virtual

@@ -219,6 +219,9 @@ void Client::updateStatus(Json::Value& msg, Ime::EditSession* session) {
 				}
 			}
 		}
+		else if (value.isBool() && strcmp(name, "openKeyboard") == 0) {
+			textService_->setKeyboardOpen(value.asBool());
+		}
 		// other configurations
 		else if (value.isString() && strcmp(name, "setSelKeys") == 0) {
 			// keys used to select candidates
@@ -287,6 +290,7 @@ void Client::onActivate() {
 	Json::Value req;
 	int sn = addSeqNum(req);
 	req["method"] = "onActivate";
+	req["isKeyboardOpen"] = textService_->isKeyboardOpened();
 
 	Json::Value ret;
 	sendRequest(req, sn, ret);
@@ -306,7 +310,7 @@ void Client::onDeactivate() {
 	LangBarButton::clearIconCache();
 }
 
-bool Client::filterKeyDown(Ime::KeyEvent& keyEvent) {
+bool Client::filterKeyDown(Ime::KeyEvent& keyEvent, Ime::EditSession *session) {
 	Json::Value req;
 	int sn = addSeqNum(req);
 	req["method"] = "filterKeyDown";
@@ -314,7 +318,7 @@ bool Client::filterKeyDown(Ime::KeyEvent& keyEvent) {
 
 	Json::Value ret;
 	sendRequest(req, sn, ret);
-	if (handleReply(ret)) {
+	if (handleReply(ret, session)) {
 		return ret["return"].asBool();
 	}
 	return false;
@@ -334,7 +338,7 @@ bool Client::onKeyDown(Ime::KeyEvent& keyEvent, Ime::EditSession* session) {
 	return false;
 }
 
-bool Client::filterKeyUp(Ime::KeyEvent& keyEvent) {
+bool Client::filterKeyUp(Ime::KeyEvent& keyEvent, Ime::EditSession *session) {
 	Json::Value req;
 	int sn = addSeqNum(req);
 	req["method"] = "filterKeyUp";
@@ -342,7 +346,7 @@ bool Client::filterKeyUp(Ime::KeyEvent& keyEvent) {
 
 	Json::Value ret;
 	sendRequest(req, sn, ret);
-	if (handleReply(ret)) {
+	if (handleReply(ret, session)) {
 		return ret["return"].asBool();
 	}
 	return false;
